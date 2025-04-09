@@ -26,15 +26,15 @@ public class CashCardJsonTest {
     @BeforeEach
     void setUp() {
         cashCards = Arrays.array(
-                new CashCard(100L, 120.00),
-                new CashCard(101L, 1.00),
-                new CashCard(102L, 150.00));
+                new CashCard(100L, 120.00,"sarah1"),
+                new CashCard(101L, 1.00, "sarah1"),
+                new CashCard(102L, 150.00, "sarah1"));
     }
 
     @Test
     void cashCardSerializationTest() throws IOException {
-        CashCard cashCard = new CashCard(100L, 120.00);
-        assertThat(json.write(cashCard)).isStrictlyEqualToJson("expected.json");
+        CashCard cashCard = new CashCard(100L, 120.00, "sarah1");
+        assertThat(json.write(cashCard)).isStrictlyEqualToJson("single.json");
         assertThat(json.write(cashCard)).hasJsonPathNumberValue("@.id");
         assertThat(json.write(cashCard)).extractingJsonPathNumberValue("@.id")
                 .isEqualTo(100);
@@ -48,11 +48,12 @@ public class CashCardJsonTest {
         String expected = """
                 {
                     "id":100,
-                    "amount":120.00
+                    "amount":120.00,
+                    "owner":"sarah1"
                 }
                 """;
         assertThat(json.parse(expected))
-                .isEqualTo(new CashCard(100L, 120.00));
+                .isEqualTo(new CashCard(100L, 120.00, "sarah1"));
         assertThat(json.parseObject(expected).id()).isEqualTo(100);
         assertThat(json.parseObject(expected).amount()).isEqualTo(120.00);
     }
@@ -60,13 +61,13 @@ public class CashCardJsonTest {
     @Test
     void cashCardListSerializationTest() throws IOException {
 
-        String expected="""
-         [
-            { "id": 100, "amount": 120.00 },
-            { "id": 101, "amount": 1.00 },
-            { "id": 102, "amount": 150.00 }
-         ]
-         """;
+        String expected = """
+                [
+                   { "id": 100, "amount": 120.00, "owner":"sarah1" },
+                   { "id": 101, "amount": 1.00, "owner":"sarah1" },
+                   { "id": 102, "amount": 150.00, "owner":"sarah1" }
+                ]
+                """;
         assertThat(jsonList.parse(expected)).isEqualTo(cashCards);
         assertThat(jsonList.write(cashCards)).isStrictlyEqualToJson("list.json");
     }

@@ -1,14 +1,17 @@
 [
   {
     "id": 100,
-    "amount": 120.00
+    "amount": 120.00,
+    "owner": "sarah1"
   },
   {
     "id": 101,
-    "amount": 1.00
+    "amount": 1.00,
+    "owner": "sarah1"
   },
   {
     "id": 102,
-    "amount": 150.00
+    "amount": 150.00,
+    "owner": "sarah1"
   }
 ]
